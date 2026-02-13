@@ -1,3 +1,19 @@
+-- Cria a tabela se não existe
+CREATE TABLE IF NOT EXISTS users.user(
+name VARCHAR(40) NOT NULL, 
+email VARCHAR(50) TEXT NOT NULL UNIQUE, 
+password_hash VARCHAR(200) TEXT NOT NULL );
+
+--Novos campos
+ALTER TABLE users.user
+ADD COLUMN id INTEGER GENERATED ALWAYS AS IDENTITY;
+
+--Exemplo de alterando os tipos de campos
+ALTER TABLE users.user
+ALTER COLUMN name TYPE VARCHAR(40) NOT NULL;
+
+-- Checks
+
 ALTER TABLE users.user
 ADD CONSTRAINT name
 CHECK (

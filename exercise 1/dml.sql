@@ -1,5 +1,3 @@
--- Cria a tabela se não existe
-CREATE TABLE IF NOT EXISTS users.user(name TEXT NOT NULL, email TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL );
 -- insere valores na tabela em cada campo desse
 INSERT INTO users.user(name, email, password_hash) 
   VALUES (
