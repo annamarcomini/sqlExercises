@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS exercicio2.product(
   price NUMERIC(10,2) NOT NULL
 
   --declaração de chaves únicas
-  CONSTRAINT exercicio2_product_barcode_uq (barcode)
+  CONSTRAINT exercicio2_product_uq_barcode (barcode)
 );
 
 CREATE TABLE IF NOT EXISTS exercicio2.user(

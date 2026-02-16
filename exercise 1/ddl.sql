@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users.user(
   password_hash VARCHAR(200) NOT NULL 
   
   --declaração de chaves únicas
-  CONSTRAINT users_user_email_uq UNIQUE (email)
+  CONSTRAINT users_user_uq_email UNIQUE (email)
 );
 
 --Novos campos
