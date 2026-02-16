@@ -1,8 +1,12 @@
 -- Cria a tabela se não existe
 CREATE TABLE IF NOT EXISTS users.user(
-name VARCHAR(40) NOT NULL, 
-email VARCHAR(50) NOT NULL UNIQUE, 
-password_hash VARCHAR(200) NOT NULL );
+  name VARCHAR(40) NOT NULL, 
+  email VARCHAR(50) NOT NULL, 
+  password_hash VARCHAR(200) NOT NULL 
+  
+  --declaração de chaves únicas
+  CONSTRAINT users_user_email_uq UNIQUE (email)
+);
 
 --Novos campos
 ALTER TABLE users.user
