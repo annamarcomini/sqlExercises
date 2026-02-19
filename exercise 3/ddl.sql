@@ -95,8 +95,7 @@ CREATE TABLE IF NOT EXISTS exercicio3.sales(
   CONSTRAINT exercicio3_sales_ck_quantities_sold
   CHECK (
     quantities_sold > 0
-  )
-
+  ),
 
   --declaração de chaves estrangeiras
   CONSTRAINT exercicio3_clients_fk
