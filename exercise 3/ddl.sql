@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS exercicio3.products(
   --declaração de restrições check
   CONSTRAINT exercicio3_products_ck_name
   CHECK (
-   trim(name) <> ''
-   AND char_length(name) BETWEEN 2 AND 150
+    trim(name) <> ''
+    AND char_length(name) BETWEEN 2 AND 150
   ),
   CONSTRAINT exercicio3_products_ck_price_cents
   CHECK (
