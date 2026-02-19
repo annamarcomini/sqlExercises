@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS exercicio3.clients(
   CONSTRAINT exercicio3_clients_ck_cpf
   CHECK (
     cpf ~ '^[0-9]{11}$' 
-    AND is_valid_cpf(cpf)
   ),
   CONSTRAINT exercicio3_clients_ck_name
   CHECK (
