@@ -1,4 +1,4 @@
-CREATE TYPE product_category_enum AS ENUM (
+CREATE TYPE exercicio3.product_category_enum AS ENUM (
   'eletronico',
   'alimento',
   'vestuario',
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS exercicio3.products(
   name VARCHAR(150) NOT NULL, 
   price_cents  INTEGER NOT NULL,
   stock INTEGER NOT NULL,
-  category  product_category_enum NOT NULL,
+  category  exercicio3.product_category_enum NOT NULL,
   
   --declaração de chaves primárias
   CONSTRAINT exercicio3_products_pk PRIMARY KEY (id),
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS exercicio3.products(
   CONSTRAINT exercicio3_products_ck_stock
   CHECK (
     stock >= 0
-  ),
+  )
 );
 
 CREATE TABLE IF NOT EXISTS exercicio3.sales(
