@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS exercicio3.clients(
   ),
   CONSTRAINT exercicio3_clients_ck_birth_date
   CHECK (
-   birth_date <= CURRENT_DATE
+    birth_date <= CURRENT_DATE
   ),
   CONSTRAINT exercicio3_clients_ck_cpf
   CHECK (
