@@ -1,10 +1,17 @@
+CREATE TYPE product_category_enum AS ENUM (
+  'eletronico',
+  'alimento',
+  'vestuario',
+  'outros'
+);
+
 CREATE TABLE IF NOT EXISTS exercicio3.clients(
   id INTEGER GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(150) NOT NULL, 
   email VARCHAR(320) NOT NULL,
   birth_date DATE NOT NULL,
-  cpf CHAR(11) NOT NULL,
-  active BOOLEAN NOT NULL DEFAULT true,
+  cpf VARCHAR(11) NOT NULL,
+  active BOOLEAN NOT NULL DEFAULT TRUE,
   password_hash VARCHAR(128) NOT NULL,
 
   --declaração de chaves primárias
@@ -17,22 +24,22 @@ CREATE TABLE IF NOT EXISTS exercicio3.clients(
   --declaração de restrições check
   CONSTRAINT exercicio3_clients_ck_email
   CHECK (
-  email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+    email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
   ),
   CONSTRAINT exercicio3_clients_ck_birth_date
   CHECK (
-  birth_date <= CURRENT_DATE
+   birth_date <= CURRENT_DATE
   ),
   CONSTRAINT exercicio3_clients_ck_cpf
   CHECK (
-  cpf ~ '^[0-9]{11}$' 
-  AND is_valid_cpf(cpf)
+    cpf ~ '^[0-9]{11}$' 
+    AND is_valid_cpf(cpf)
   ),
   CONSTRAINT exercicio3_clients_ck_name
   CHECK (
-  trim(name) <> ''
-  AND char_length(name) BETWEEN 2 AND 150
-  AND name ~ '^[A-Za-zÀ-ÿ]+( [A-Za-zÀ-ÿ]+)*$'
+    trim(name) <> ''
+    AND char_length(name) BETWEEN 2 AND 150
+    AND name ~ '^[A-Za-zÀ-ÿ]+( [A-Za-zÀ-ÿ]+)*$'
   )
 );
 
@@ -41,7 +48,7 @@ CREATE TABLE IF NOT EXISTS exercicio3.products(
   name VARCHAR(150) NOT NULL, 
   price_cents  INTEGER NOT NULL,
   stock INTEGER NOT NULL,
-  category  VARCHAR(20) NOT NULL,
+  category  product_category_enum NOT NULL,
   
   --declaração de chaves primárias
   CONSTRAINT exercicio3_products_pk PRIMARY KEY (id),
@@ -49,27 +56,23 @@ CREATE TABLE IF NOT EXISTS exercicio3.products(
   --declaração de restrições check
   CONSTRAINT exercicio3_products_ck_name
   CHECK (
-  trim(name) <> ''
-  AND char_length(name) BETWEEN 2 AND 150
+   trim(name) <> ''
+   AND char_length(name) BETWEEN 2 AND 150
   ),
   CONSTRAINT exercicio3_products_ck_price_cents
   CHECK (
-  price_cents > 0
+    price_cents > 0
   ),
   CONSTRAINT exercicio3_products_ck_stock
   CHECK (
-  stock >= 0
+    stock >= 0
   ),
-  CONSTRAINT exercicio3_products_ck_category
-  CHECK (
-  category IN ('eletronico', 'alimento', 'vestuario', 'outros')
-  )
 );
 
 CREATE TABLE IF NOT EXISTS exercicio3.sales(
   id INTEGER GENERATED ALWAYS AS IDENTITY,
   quantities_sold INTEGER NOT NULL,
-  sale_date DATE NOT NULL,
+  sale_date TIMESTAMPTZ NOT NULL,
   discount_percent  NUMERIC(5,2),
   client_id INTEGER NOT NULL,
   product_id INTEGER NOT NULL,
@@ -80,17 +83,19 @@ CREATE TABLE IF NOT EXISTS exercicio3.sales(
   --declaração de restrições check
   CONSTRAINT exercicio3_sales_ck_sale_date
   CHECK (
-  sale_date <= CURRENT_DATE  
+    sale_date <= CURRENT_DATE  
   ),
 
   CONSTRAINT exercicio3_sales_ck_discount_percent
   CHECK (
-  discount_percent >= 0
-  AND discount_percent <= 100
+    discount_percent >= 0
+    AND discount_percent <= 100
   ),
 
   CONSTRAINT exercicio3_sales_ck_quantities_sold
-  CHECK (quantities_sold > 0)
+  CHECK (
+    quantities_sold > 0
+  )
 
 
   --declaração de chaves estrangeiras
