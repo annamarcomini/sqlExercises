@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT exercicio3
+
 CREATE TYPE exercicio3.product_category_enum AS ENUM (
   'eletronico',
   'alimento',
