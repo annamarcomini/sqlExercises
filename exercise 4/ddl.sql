@@ -3,62 +3,47 @@ CREATE SCHEMA IF NOT EXISTS exercicio4;
 CREATE OR REPLACE FUNCTION validate_cpf(cpf_input TEXT)
  RETURNS BOOLEAN AS $$
  DECLARE
-    cpf TEXT;
-    soma1 INT;
-    soma2 INT;
+    weights1 INT[] := ARRAY[10,9,8,7,6,5,4,3,2];
+    weights2 INT[] := ARRAY[11,10,9,8,7,6,5,4,3,2];
+    sum1 INT:= 0;
+    sum2 INT:= 0;
     dig1 INT;
     dig2 INT;
  BEGIN
-    -- Remove tudo que não for número
-    cpf := regexp_replace(cpf_input, '[^0-9]', '', 'g');
 
     -- Verifica tamanho
-    IF length(cpf) <> 11 THEN
+    IF length(cpf_input) <> 11 THEN
         RETURN FALSE;
     END IF;
 
     -- Rejeita CPFs com todos os dígitos iguais
-    IF cpf ~ '^(\d)\1{10}$' THEN
+    IF cpf_input ~ '^(\d)\1{10}$' THEN
         RETURN FALSE;
     END IF;
 
     -- Primeiro dígito
-    soma1 :=
-        substring(cpf,1,1)::INT * 10 +
-        substring(cpf,2,1)::INT * 9  +
-        substring(cpf,3,1)::INT * 8  +
-        substring(cpf,4,1)::INT * 7  +
-        substring(cpf,5,1)::INT * 6  +
-        substring(cpf,6,1)::INT * 5  +
-        substring(cpf,7,1)::INT * 4  +
-        substring(cpf,8,1)::INT * 3  +
-        substring(cpf,9,1)::INT * 2;
+    FOR i IN 1..9 LOOP
+        sum1 := sum1 + substring(cpf_input, i, 1)::INT * weights1[i];
+    END LOOP;
     
-    --pego o resto de soma1 divido por 11
-    dig1 := (soma1 * 10) % 11;
+    --pego o resto de sum1 divido por 11
+    dig1 := (sum1 * 10) % 11;
     --se o resto de 10 então o valor de dig1 vai ficar como 0
     IF dig1 = 10 THEN dig1 := 0; END IF;
     --se dig1 calculado for diferente de (<>) do decimo digito que ta sendo inserido no banco barra o cpf
-    IF dig1 <> substring(cpf,10,1)::INT THEN
+    IF dig1 <> substring(cpf_input,10,1)::INT THEN
         RETURN FALSE;
     END IF;
 
     -- Segundo dígito
-    soma2 :=
-        substring(cpf,1,1)::INT * 11 +
-        substring(cpf,2,1)::INT * 10 +
-        substring(cpf,3,1)::INT * 9  +
-        substring(cpf,4,1)::INT * 8  +
-        substring(cpf,5,1)::INT * 7  +
-        substring(cpf,6,1)::INT * 6  +
-        substring(cpf,7,1)::INT * 5  +
-        substring(cpf,8,1)::INT * 4  +
-        substring(cpf,9,1)::INT * 3  +
-        substring(cpf,10,1)::INT * 2;
+    FOR i IN 1..10 LOOP
+        sum2 := sum2 + substring(cpf_input, i, 1)::INT * weights2[i];
+    END LOOP;
 
-    dig2 := (soma2 * 10) % 11;
+
+    dig2 := (sum2 * 10) % 11;
     IF dig2 = 10 THEN dig2 := 0; END IF;
-    IF dig2 <> substring(cpf,11,1)::INT THEN
+    IF dig2 <> substring(cpf_input,11,1)::INT THEN
         RETURN FALSE;
     END IF;
 
@@ -69,66 +54,45 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 CREATE OR REPLACE FUNCTION validate_cnpj(cnpj_input TEXT)
  RETURNS BOOLEAN AS $$
  DECLARE
-    cnpj TEXT;
-    soma1 INT;
-    soma2 INT;
+    weights1 INT[] := ARRAY[5,4,3,2,9,8,7,6,5,4,3,2];
+    weights2 INT[] := ARRAY[6,5,4,3,2,9,8,7,6,5,4,3,2];
+    i INT;
+    sum1 INT:= 0;
+    sum2 INT:= 0;
     dig1 INT;
     dig2 INT;
  BEGIN
-    -- Remove tudo que não for número
-    cnpj := regexp_replace(cnpj_input, '[^0-9]', '', 'g');
 
-    IF length(cnpj) <> 14 THEN
+    IF length(cnpj_input) <> 14 THEN
         RETURN FALSE;
     END IF;
 
     -- Rejeita números repetidos
-    IF cnpj ~ '^(\d)\1{13}$' THEN
+    IF cnpj_input ~ '^(\d)\1{13}$' THEN
         RETURN FALSE;
     END IF;
 
     -- Primeiro dígito
-    soma1 :=
-        substring(cnpj,1,1)::INT * 5 +
-        substring(cnpj,2,1)::INT * 4 +
-        substring(cnpj,3,1)::INT * 3 +
-        substring(cnpj,4,1)::INT * 2 +
-        substring(cnpj,5,1)::INT * 9 +
-        substring(cnpj,6,1)::INT * 8 +
-        substring(cnpj,7,1)::INT * 7 +
-        substring(cnpj,8,1)::INT * 6 +
-        substring(cnpj,9,1)::INT * 5 +
-        substring(cnpj,10,1)::INT * 4 +
-        substring(cnpj,11,1)::INT * 3 +
-        substring(cnpj,12,1)::INT * 2;
+    FOR i IN 1..12 LOOP
+        sum1 := sum1 + substring(cnpj_input, i, 1)::INT * weights1[i];
+    END LOOP;
 
-    dig1 := soma1 % 11;
+    dig1 := sum1 % 11;
     dig1 := CASE WHEN dig1 < 2 THEN 0 ELSE 11 - dig1 END;
 
-    IF dig1 <> substring(cnpj,13,1)::INT THEN
+    IF dig1 <> substring(cnpj_input,13,1)::INT THEN
         RETURN FALSE;
     END IF;
 
     -- Segundo dígito
-    soma2 :=
-        substring(cnpj,1,1)::INT * 6 +
-        substring(cnpj,2,1)::INT * 5 +
-        substring(cnpj,3,1)::INT * 4 +
-        substring(cnpj,4,1)::INT * 3 +
-        substring(cnpj,5,1)::INT * 2 +
-        substring(cnpj,6,1)::INT * 9 +
-        substring(cnpj,7,1)::INT * 8 +
-        substring(cnpj,8,1)::INT * 7 +
-        substring(cnpj,9,1)::INT * 6 +
-        substring(cnpj,10,1)::INT * 5 +
-        substring(cnpj,11,1)::INT * 4 +
-        substring(cnpj,12,1)::INT * 3 +
-        substring(cnpj,13,1)::INT * 2;
+    FOR i IN 1..13 LOOP
+        sum2 := sum2 + substring(cnpj_input, i, 1)::INT * weights2[i];
+    END LOOP;
 
-    dig2 := soma2 % 11;
+    dig2 := sum2 % 11;
     dig2 := CASE WHEN dig2 < 2 THEN 0 ELSE 11 - dig2 END;
 
-    IF dig2 <> substring(cnpj,14,1)::INT THEN
+    IF dig2 <> substring(cnpj_input,14,1)::INT THEN
         RETURN FALSE;
     END IF;
 
@@ -141,7 +105,6 @@ CREATE OR REPLACE FUNCTION validate_telephone(telephone_input TEXT)
  DECLARE
     telephone TEXT;
  BEGIN
-    telephone := regexp_replace(telefone_input, '[^0-9]', '', 'g');
 
     IF length(telephone) NOT IN (10, 11) THEN
         RETURN FALSE;
@@ -152,6 +115,42 @@ CREATE OR REPLACE FUNCTION validate_telephone(telephone_input TEXT)
     END IF;
 
     IF telefone !~ '^(?:[1-9]{2})(?:9\d{8}|\d{8})$' THEN
+        RETURN FALSE;
+    END IF;
+
+    IF NOT (
+        substring(telephone, 1, 2)::INT = ANY (
+            ARRAY[
+                11,12,13,14,15,16,17,18,19,
+                21,22,24,
+                27,28,
+                31,32,33,34,35,37,38,
+                41,42,43,44,45,46,
+                47,48,49,
+                51,53,54,55,
+                61,
+                62,64,
+                63,
+                65,66,
+                67,
+                68,
+                69,
+                71,73,74,75,77,
+                79,
+                81,87,
+                82,
+                83,
+                84,
+                85,88,
+                86,89,
+                91,93,94,
+                92,97,
+                95,
+                96,
+                98,99
+            ]
+        )
+        ) THEN
         RETURN FALSE;
     END IF;
 
