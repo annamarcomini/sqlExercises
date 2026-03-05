@@ -1,0 +1,62 @@
+name: ci
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_dir:
+        description: 'Test directory (ex: tests)'
+        required: false
+        default: 'tests'
+      test_file:
+        description: 'Specific test file (ex: tests/my_test.test.sql)'
+        required: false
+
+jobs:
+  pg-prove:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pg_prove
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            postgresql-client \
+            postgresql-pgtap \
+            libtap-parser-sourcehandler-pgtap-perl
+
+      - name: Test DB connection
+        env:
+          PGHOST: ${{ secrets.PG_HOST }}
+          PGPORT: ${{ secrets.PG_PORT }}
+          PGDATABASE: ${{ secrets.PG_DB }}
+          PGUSER: ${{ secrets.PG_USER }}
+          PGPASSWORD: ${{ secrets.PG_PASSWORD }}
+          PGSSLMODE: require
+        run: |
+          psql -c "select 1;"
+
+      - name: Run pg_prove
+        env:
+          PGHOST: ${{ secrets.PG_HOST }}
+          PGPORT: ${{ secrets.PG_PORT }}
+          PGDATABASE: ${{ secrets.PG_DB }}
+          PGUSER: ${{ secrets.PG_USER }}
+          PGPASSWORD: ${{ secrets.PG_PASSWORD }}
+          PGSSLMODE: require
+        run: |
+          if [ -n "${{ inputs.test_file }}" ]; then
+            echo "Rodando arquivo específico"
+            TESTS="${{ inputs.test_file }}"
+          else
+            echo "Rodando diretório inteiro"
+            TESTS=$(find "${{ inputs.test_dir }}" -name "*.test.sql")
+          fi
+
+          pg_prove \
+            --host="$PGHOST" \
+            --port="$PGPORT" \
+            --username="$PGUSER" \
+            --dbname="$PGDATABASE" \
+            $TESTS
