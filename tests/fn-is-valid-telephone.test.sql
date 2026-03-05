@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(6);
+SELECT plan(5);
 
 -- Telefones válidos
 SELECT diag('telefone celular com ddd existente deve ser válido');
