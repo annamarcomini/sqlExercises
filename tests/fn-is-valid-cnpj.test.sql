@@ -1,4 +1,4 @@
-BEGIN
+BEGIN;
 
 SELECT plan(3);
 
