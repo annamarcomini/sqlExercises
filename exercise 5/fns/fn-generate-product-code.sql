@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION generate_product_code()
+CREATE OR REPLACE FUNCTION exercicio5.generate_product_code()
  RETURNS TEXT
  LANGUAGE SQL
  VOLATILE

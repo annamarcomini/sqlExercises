@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION exercicio5.validate_cpf(p_p_cpf_input TEXT)
+CREATE OR REPLACE FUNCTION exercicio5.validate_cpf(p_cpf_input TEXT)
  RETURNS BOOLEAN AS $$
  LANGUAGE plpgsql IMMUTABLE
  DECLARE

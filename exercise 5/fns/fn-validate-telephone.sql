@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION exercicio5.validate_telephone(p_p_telephone_input TEXT)
+CREATE OR REPLACE FUNCTION exercicio5.validate_telephone(p_telephone_input TEXT)
  RETURNS BOOLEAN AS $$ 
  LANGUAGE plpgsql IMMUTABLE
  BEGIN

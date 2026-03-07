@@ -1,5 +1,6 @@
 BEGIN;
 
+SET search_path to ext_pgtap;
 SELECT plan(5);
 
 -- Telefones válidos

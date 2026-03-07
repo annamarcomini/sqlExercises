@@ -1,14 +1,14 @@
-CREATE OR REPLACE FUNCTION exercicio5.validate_cnpj(p_p_cnpj_input TEXT)
+CREATE OR REPLACE FUNCTION exercicio5.validate_cnpj(p_cnpj_input TEXT)
  RETURNS BOOLEAN AS $$
  LANGUAGE plpgsql IMMUTABLE
  DECLARE
-    weights1 INT[] := ARRAY[5,4,3,2,9,8,7,6,5,4,3,2];
-    weights2 INT[] := ARRAY[6,5,4,3,2,9,8,7,6,5,4,3,2];
-    i INT;
-    sum1 INT:= 0;
-    sum2 INT:= 0;
-    dig1 INT;
-    dig2 INT;
+    v_v_weights1 INT[] := ARRAY[5,4,3,2,9,8,7,6,5,4,3,2];
+    v_weights2 INT[] := ARRAY[6,5,4,3,2,9,8,7,6,5,4,3,2];
+    v_i INT;
+    v_sum1 INT:= 0;
+    v_sum2 INT:= 0;
+    v_dig1 INT;
+    v_dig2 INT;
  BEGIN
 
     IF length(p_cnpj_input) <> 14 THEN
@@ -21,26 +21,26 @@ CREATE OR REPLACE FUNCTION exercicio5.validate_cnpj(p_p_cnpj_input TEXT)
     END IF;
 
     -- Primeiro dígito
-    FOR i IN 1..12 LOOP
-        sum1 := sum1 + substring(p_cnpj_input, i, 1)::INT * weights1[i];
+    FOR v_i IN 1..12 LOOP
+        v_sum1 := v_sum1 + substring(p_cnpj_input, v_i, 1)::INT * v_weights1[v_i];
     END LOOP;
 
-    dig1 := sum1 % 11;
-    dig1 := CASE WHEN dig1 < 2 THEN 0 ELSE 11 - dig1 END;
+    v_dig1 := v_sum1 % 11;
+    v_dig1 := CASE WHEN v_dig1 < 2 THEN 0 ELSE 11 - v_dig1 END;
 
-    IF dig1 <> substring(p_cnpj_input,13,1)::INT THEN
+    IF v_dig1 <> substring(p_cnpj_input,13,1)::INT THEN
         RETURN FALSE;
     END IF;
 
     -- Segundo dígito
-    FOR i IN 1..13 LOOP
-        sum2 := sum2 + substring(p_cnpj_input, i, 1)::INT * weights2[i];
+    FOR v_i IN 1..13 LOOP
+        v_sum2 := v_sum2 + substring(p_cnpj_input, v_i, 1)::INT * v_weights2[v_i];
     END LOOP;
 
-    dig2 := sum2 % 11;
-    dig2 := CASE WHEN dig2 < 2 THEN 0 ELSE 11 - dig2 END;
+    v_dig2 := v_sum2 % 11;
+    v_dig2 := CASE WHEN v_dig2 < 2 THEN 0 ELSE 11 - v_dig2 END;
 
-    IF dig2 <> substring(p_cnpj_input,14,1)::INT THEN
+    IF v_dig2 <> substring(p_cnpj_input,14,1)::INT THEN
         RETURN FALSE;
     END IF;
 
