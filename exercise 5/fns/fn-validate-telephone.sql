@@ -1,22 +1,22 @@
-CREATE OR REPLACE FUNCTION validate_telephone(telephone_input TEXT)
+CREATE OR REPLACE FUNCTION exercicio5.validate_telephone(p_p_telephone_input TEXT)
  RETURNS BOOLEAN AS $$ 
-
+ LANGUAGE plpgsql IMMUTABLE
  BEGIN
 
-    IF length(telephone_input) NOT IN (10, 11) THEN
+    IF length(p_telephone_input) NOT IN (10, 11) THEN
         RETURN FALSE;
     END IF;
 
-    IF telephone_input ~ '^(\d)\1+$' THEN
+    IF p_telephone_input ~ '^(\d)\1+$' THEN
         RETURN FALSE;
     END IF;
 
-    IF telephone_input !~ '^(?:[1-9]{2})(?:9\d{8}|[2-5]\d{7})$' THEN
+    IF p_telephone_input !~ '^(?:[1-9]{2})(?:9\d{8}|[2-5]\d{7})$' THEN
         RETURN FALSE;
     END IF;
 
     IF NOT (
-        substring(telephone_input, 1, 2)::INT = ANY (
+        substring(p_telephone_input, 1, 2)::INT = ANY (
             ARRAY[
                 11,12,13,14,15,16,17,18,19,
                 21,22,24,
@@ -54,4 +54,4 @@ CREATE OR REPLACE FUNCTION validate_telephone(telephone_input TEXT)
     RETURN TRUE;
     
  END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$;

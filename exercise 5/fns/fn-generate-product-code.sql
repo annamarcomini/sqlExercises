@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION generate_product_code()
- RETURNS text
- LANGUAGE sql
+ RETURNS TEXT
+ LANGUAGE SQL
  VOLATILE
  AS $$
   SELECT string_agg(

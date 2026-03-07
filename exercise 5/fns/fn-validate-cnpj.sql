@@ -1,5 +1,6 @@
-CREATE OR REPLACE FUNCTION validate_cnpj(cnpj_input TEXT)
+CREATE OR REPLACE FUNCTION exercicio5.validate_cnpj(p_p_cnpj_input TEXT)
  RETURNS BOOLEAN AS $$
+ LANGUAGE plpgsql IMMUTABLE
  DECLARE
     weights1 INT[] := ARRAY[5,4,3,2,9,8,7,6,5,4,3,2];
     weights2 INT[] := ARRAY[6,5,4,3,2,9,8,7,6,5,4,3,2];
@@ -10,39 +11,39 @@ CREATE OR REPLACE FUNCTION validate_cnpj(cnpj_input TEXT)
     dig2 INT;
  BEGIN
 
-    IF length(cnpj_input) <> 14 THEN
+    IF length(p_cnpj_input) <> 14 THEN
         RETURN FALSE;
     END IF;
 
     -- Rejeita números repetidos
-    IF cnpj_input ~ '^(\d)\1{13}$' THEN
+    IF p_cnpj_input ~ '^(\d)\1{13}$' THEN
         RETURN FALSE;
     END IF;
 
     -- Primeiro dígito
     FOR i IN 1..12 LOOP
-        sum1 := sum1 + substring(cnpj_input, i, 1)::INT * weights1[i];
+        sum1 := sum1 + substring(p_cnpj_input, i, 1)::INT * weights1[i];
     END LOOP;
 
     dig1 := sum1 % 11;
     dig1 := CASE WHEN dig1 < 2 THEN 0 ELSE 11 - dig1 END;
 
-    IF dig1 <> substring(cnpj_input,13,1)::INT THEN
+    IF dig1 <> substring(p_cnpj_input,13,1)::INT THEN
         RETURN FALSE;
     END IF;
 
     -- Segundo dígito
     FOR i IN 1..13 LOOP
-        sum2 := sum2 + substring(cnpj_input, i, 1)::INT * weights2[i];
+        sum2 := sum2 + substring(p_cnpj_input, i, 1)::INT * weights2[i];
     END LOOP;
 
     dig2 := sum2 % 11;
     dig2 := CASE WHEN dig2 < 2 THEN 0 ELSE 11 - dig2 END;
 
-    IF dig2 <> substring(cnpj_input,14,1)::INT THEN
+    IF dig2 <> substring(p_cnpj_input,14,1)::INT THEN
         RETURN FALSE;
     END IF;
 
     RETURN TRUE;
  END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$;
