@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION exercicio5.validate_cpf(p_cpf_input TEXT)
- RETURNS BOOLEAN AS $$
- LANGUAGE plpgsql IMMUTABLE
+ RETURNS BOOLEAN 
+ LANGUAGE PLPGSQL IMMUTABLE
+ AS $$
  DECLARE
     v_weights1 INT[] := ARRAY[10,9,8,7,6,5,4,3,2];
     v_weights2 INT[] := ARRAY[11,10,9,8,7,6,5,4,3,2];

@@ -1,8 +1,9 @@
 CREATE OR REPLACE FUNCTION exercicio5.validate_cnpj(p_cnpj_input TEXT)
- RETURNS BOOLEAN AS $$
- LANGUAGE plpgsql IMMUTABLE
+ RETURNS BOOLEAN 
+ LANGUAGE PLPGSQL IMMUTABLE
+ AS $$
  DECLARE
-    v_v_weights1 INT[] := ARRAY[5,4,3,2,9,8,7,6,5,4,3,2];
+    v_weights1 INT[] := ARRAY[5,4,3,2,9,8,7,6,5,4,3,2];
     v_weights2 INT[] := ARRAY[6,5,4,3,2,9,8,7,6,5,4,3,2];
     v_i INT;
     v_sum1 INT:= 0;

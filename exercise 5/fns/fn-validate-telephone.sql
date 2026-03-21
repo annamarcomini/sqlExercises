@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION exercicio5.validate_telephone(p_telephone_input TEXT)
- RETURNS BOOLEAN AS $$ 
- LANGUAGE plpgsql IMMUTABLE
+ RETURNS BOOLEAN 
+ LANGUAGE PLPGSQL IMMUTABLE
+ AS $$
  BEGIN
 
     IF length(p_telephone_input) NOT IN (10, 11) THEN
