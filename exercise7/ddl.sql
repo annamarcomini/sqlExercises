@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS kitchens(
 
 CREATE TABLE IF NOT EXISTS stations(
   id INTEGER GENERATED ALWAYS AS IDENTITY,
-  kitchen_identifier INTEGER NOT NULL,
+  kitchen_identifier TEXT NOT NULL DEFAULT generate_random_identifier_3(),
   operational_type VARCHAR(255) NOT NULL,
   operational_situation VARCHAR(150) NOT NULL,
   exercicio7_t_kitchens_c_id INTEGER NOT NULL,
