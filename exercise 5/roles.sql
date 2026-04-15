@@ -2,6 +2,7 @@
 --app_anonymous role and permissions
 -- =========================================
 CREATE ROLE app_anonymous;
+GRANT USAGE ON SCHEMA exercicio5 TO app_anonymous;
 --clients table
 GRANT INSERT (name, email, birth_date, cpf, password_hash)
 ON exercicio5.clients
@@ -14,6 +15,7 @@ TO app_anonymous;
 --app_customer role and permissions
 -- =========================================
 CREATE ROLE app_customer;
+GRANT USAGE ON SCHEMA exercicio5 TO app_customer;
 --clients table
 GRANT SELECT (id, name, email, birth_date, cpf, active)
 ON exercicio5.clients
@@ -39,6 +41,7 @@ TO app_customer;
 --app_admin role and permissions
 -- =========================================
 CREATE ROLE app_admin;
+GRANT USAGE ON SCHEMA exercicio5 TO app_admin;
 --clients table
 GRANT SELECT (id, name, email, birth_date, cpf, active, password_hash)
 ON exercicio5.clients
