@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION generate_random_identifier_3()
+CREATE OR REPLACE FUNCTION exercicio7.generate_random_identifier_3()
 RETURNS TEXT AS $$
 $$ LANGUAGE plpgsql;
 DECLARE
