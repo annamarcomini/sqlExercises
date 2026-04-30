@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS exercicio7.chefs(
 
   --declaração de chaves únicas
   CONSTRAINT exercicio7_chefs_uq_email UNIQUE (email),
-  CONSTRAINT exercicio7_chefs_uq_cpf UNIQUE (cpf),
+  CONSTRAINT exercicio7_chefs_uq_cpf UNIQUE (cpf)
 );
 
 CREATE TABLE IF NOT EXISTS exercicio7.menus(
@@ -80,6 +80,37 @@ CREATE TABLE IF NOT EXISTS exercicio7.orders(
   REFERENCES exercicio7.menus (id)
 );
 
+CREATE TABLE IF NOT EXISTS exercicio7.kitchens(
+  id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name VARCHAR(150) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  city VARCHAR(150) NOT NULL,
+  max_stations_number INTEGER NOT NULL,
+
+  --declaração de chaves primárias
+  CONSTRAINT exercicio7_kitchens_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS exercicio7.stations(
+  id INTEGER GENERATED ALWAYS AS IDENTITY,
+  kitchen_identifier VARCHAR(3) NOT NULL DEFAULT exercicio7.generate_random_identifier_3(),
+  operational_type exercicio7.stations_operational_type_enum NOT NULL,
+  operational_situation exercicio7.stations_operational_situation_enum NOT NULL,
+  exercicio7_t_kitchens_c_id INTEGER NOT NULL,
+
+  --declaração de chaves primárias
+  CONSTRAINT exercicio7_stations_pk PRIMARY KEY (id),
+
+  --decalaração de chaves únicas
+  CONSTRAINT exercicio7_stations_uq_kitchen_identifier UNIQUE (kitchen_identifier),
+
+
+  --declaração de chaves estrangeiras
+  CONSTRAINT exercicio7_kitchens_fk
+  FOREIGN KEY (exercicio7_t_kitchens_c_id)
+  REFERENCES exercicio7.kitchens (id)
+);
+
 CREATE TABLE IF NOT EXISTS exercicio7.reservations(
   id INTEGER GENERATED ALWAYS AS IDENTITY,
   reservation_interval TSTZRANGE NOT NULL,
@@ -99,36 +130,6 @@ CREATE TABLE IF NOT EXISTS exercicio7.reservations(
   REFERENCES exercicio7.chefs (id)
 );
 
-CREATE TABLE IF NOT EXISTS exercicio7.kitchens(
-  id INTEGER GENERATED ALWAYS AS IDENTITY,
-  name VARCHAR(150) NOT NULL,
-  address VARCHAR(255) NOT NULL,
-  city VARCHAR(150) NOT NULL,
-  max_stations_number INTEGER NOT NULL,
-
-  --declaração de chaves primárias
-  CONSTRAINT exercicio7_kitchens_pk PRIMARY KEY (id),
-);
-
-CREATE TABLE IF NOT EXISTS exercicio7.stations(
-  id INTEGER GENERATED ALWAYS AS IDENTITY,
-  kitchen_identifier VARCHAR(3) NOT NULL DEFAULT generate_random_identifier_3(),
-  operational_type exercicio7.stations_operational_type_enum NOT NULL,
-  operational_situation exercicio7.stations_operational_situation_enum NOT NULL,
-  exercicio7_t_kitchens_c_id INTEGER NOT NULL,
-
-  --declaração de chaves primárias
-  CONSTRAINT exercicio7_stations_pk PRIMARY KEY (id),
-
-  --decalaração de chaves únicas
-  CONSTRAINT exercicio7_stations_uq_kitchen_identifier UNIQUE (kitchen_identifier),
-
-
-  --declaração de chaves estrangeiras
-  CONSTRAINT exercicio7_kitchens_fk
-  FOREIGN KEY (exercicio7_t_kitchens_c_id)
-  REFERENCES exercicio7.kitchens (id)
-);
 
 
 
