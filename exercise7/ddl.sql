@@ -3,37 +3,37 @@ CREATE SCHEMA IF NOT EXISTS exercicio7;
 CREATE TYPE exercicio7.chefs_situation_enum AS ENUM (
   'ativo',
   'suspenso',
-  'inativo',
+  'inativo'
 );
 
 CREATE TYPE exercicio7.menus_situation_enum AS ENUM (
   'ativo',
   'suspenso',
-  'inativo',
+  'inativo'
 );
 
 CREATE TYPE exercicio7.orders_situation_enum AS ENUM (
   'pendente', 
   'confirmado', 
   'cancelado', 
-  'concluído',
+  'concluído'
 );
 
 CREATE TYPE exercicio7.stations_operational_type_enum AS ENUM (
   'grelha',
   'fritura', 
   'preparo', 
-  'forno',
+  'forno'
 );
 
 CREATE TYPE exercicio7.stations_operational_situation_enum AS ENUM (
   'disponível', 
   'manutenção', 
-  'inativa',
+  'inativa'
 );
 
 CREATE TABLE IF NOT EXISTS exercicio7.chefs(
-  id NTEGER GENERATED ALWAYS AS IDENTITY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(150) NOT NULL,
   email VARCHAR(320) NOT NULL,
   cpf VARCHAR(11) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS exercicio7.chefs(
 );
 
 CREATE TABLE IF NOT EXISTS exercicio7.menus(
-  id NTEGER GENERATED ALWAYS AS IDENTITY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(150) NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   situation exercicio7.menus_situation_enum NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS exercicio7.orders(
   --declaração de chaves estrangeiras
   CONSTRAINT exercicio7_menus_fk
   FOREIGN KEY (exercicio7_t_menus_c_id)
-  REFERENCES exercicio7.menu (id)
+  REFERENCES exercicio7.menus (id)
 );
 
 CREATE TABLE IF NOT EXISTS exercicio7.reservations(
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS exercicio7.reservations(
   --declaração de chaves estrangeiras
   CONSTRAINT exercicio7_station_fk
   FOREIGN KEY (exercicio7_t_station_c_id)
-  REFERENCES kitchen_identifier.stations (id)
+  REFERENCES exercicio7.stations (id),
 
   CONSTRAINT exercicio7_chefs_fk
   FOREIGN KEY (exercicio7_t_chefs_c_id)
