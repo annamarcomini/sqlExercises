@@ -36,6 +36,10 @@ GRANT SELECT ON exercicio7.menus TO client;
 -- orders table
 GRANT SELECT, INSERT ON exercicio7.orders TO client;
 
+------ anonym role ------
+CREATE ROLE exercicio7.anonym;
+GRANT USAGE ON SCHEMA exercicio7 TO anonym;
+
 ------ Serial or identity accesss ------
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA exercicio7 
 TO chef, client;
