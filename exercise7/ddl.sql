@@ -7,9 +7,9 @@ CREATE TYPE exercicio7.chefs_situation_enum AS ENUM (
 );
 
 CREATE TYPE exercicio7.menus_situation_enum AS ENUM (
-  'ativo',
-  'suspenso',
-  'inativo'
+  'rascunho', 
+  'publicado', 
+  'arquivado'
 );
 
 CREATE TYPE exercicio7.orders_situation_enum AS ENUM (
@@ -83,9 +83,14 @@ CREATE TABLE IF NOT EXISTS exercicio7.orders(
 CREATE TABLE IF NOT EXISTS exercicio7.kitchens(
   id INTEGER GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(150) NOT NULL,
-  address VARCHAR(255) NOT NULL,
   city VARCHAR(150) NOT NULL,
-  max_stations_number INTEGER NOT NULL,
+  street VARCHAR(150) NOT NULL,
+  number VARCHAR(10) NOT NULL,
+  neighborhood VARCHAR(100) NOT NULL,
+  state VARCHAR(2) NOT NULL,
+  zip_code VARCHAR(8) NOT NULL,
+  complement VARCHAR(100),
+  max_stations_number SMALLINT NOT NULL,
 
   --declaração de chaves primárias
   CONSTRAINT exercicio7_kitchens_pk PRIMARY KEY (id)
