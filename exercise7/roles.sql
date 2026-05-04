@@ -5,7 +5,7 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA exercicio7 TO admin;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA exercicio7 TO admin;
 
 ------ chef role -------
-CREATE ROLE exercicio7.chef;
+CREATE ROLE chef;
 GRANT USAGE ON SCHEMA exercicio7 TO chef;
 
 -- chefs table
@@ -27,7 +27,7 @@ GRANT SELECT ON exercicio7.kitchens TO chef;
 GRANT SELECT ON exercicio7.orders TO chef;
 
 ------- client role -------
-CREATE ROLE exercicio7.client;
+CREATE ROLE client;
 GRANT USAGE ON SCHEMA exercicio7 TO client;
 
 -- menus table
@@ -37,7 +37,7 @@ GRANT SELECT ON exercicio7.menus TO client;
 GRANT SELECT, INSERT ON exercicio7.orders TO client;
 
 ------ anonym role ------
-CREATE ROLE exercicio7.anonym;
+CREATE ROLE anonym;
 GRANT USAGE ON SCHEMA exercicio7 TO anonym;
 
 ------ Serial or identity accesss ------
