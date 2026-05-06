@@ -27,27 +27,27 @@ CHECK (
 --cks kitchens table
 ALTER TABLE exercicio7.kitchens
 ADD CONSTRAINT exercicio7_kitchens_ck_max_stations_number
-CHECK (max_stations_number > 0),
+CHECK (max_stations_number > 0);
 
 ALTER TABLE exercicio7.kitchens
 ADD CONSTRAINT exercicio7_kitchens_ck_name
 CHECK (
     exercicio7.fn_validate_blank_strings(name)
-),
+);
 
 ALTER TABLE exercicio7.kitchens
 ADD CONSTRAINT exercicio7_kitchens_ck_address
 CHECK (
     exercicio7.fn_validate_blank_strings(address)
-),
+);
 
 ALTER TABLE exercicio7.kitchens
 ADD CONSTRAINT exercicio7_kitchens_ck_city
 CHECK (
     exercicio7.fn_validate_blank_strings(city)
-),
+);
 
 --cks orders table
 ALTER TABLE exercicio7.orders
 ADD CONSTRAINT exercicio7_orders_ck_total_value_cents
-CHECK (total_value_cents > 0),
+CHECK (total_value_cents > 0);
