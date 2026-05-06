@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan();
+SELECT plan(4);
 
 SET search_path to ext_pgtap;
 
