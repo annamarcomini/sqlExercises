@@ -11,3 +11,4 @@ BEGIN
   END LOOP;
   RETURN result;
 END
+$$
