@@ -1,8 +1,8 @@
 BEGIN;
 
-SELECT plan(5);
-
 SET search_path to ext_pgtap;
+
+SELECT plan(5);
 
 -- string normal
 SELECT ok(

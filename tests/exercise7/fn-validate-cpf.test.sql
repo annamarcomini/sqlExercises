@@ -1,6 +1,7 @@
 BEGIN;
 
 SET search_path to ext_pgtap;
+
 SELECT plan(3);
 
 SELECT diag('Retorna TRUE se o cpf for válido');

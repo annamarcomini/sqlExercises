@@ -1,7 +1,8 @@
 BEGIN;
-SELECT plan(4);
 
 SET search_path to ext_pgtap;
+
+SELECT plan(4);
 
 -----kitchens table ck tests
 SELECT lives_ok(
