@@ -7,7 +7,6 @@ CREATE OR REPLACE FUNCTION
         p_has_spaces BOOLEAN DEFAULT FALSE,
         p_has_uppercase BOOLEAN DEFAULT FALSE,
         p_has_lowercase BOOLEAN DEFAULT FALSE,
-        p_allows_null BOOLEAN DEFAULT FALSE,
         p_min_length INTEGER DEFAULT NULL,
         p_max_length INTEGER DEFAULT NULL
     ) RETURNS BOOLEAN
@@ -58,11 +57,7 @@ BEGIN
     IF p_has_lowercase AND NOT (p_value ~ '[a-z]') THEN
         RETURN FALSE;
     END IF;
-
-    IF NOT p_allows_null AND p_value IS NULL THEN
-        RETURN FALSE;
-    END IF;
-
+    
     -- 3. Validação final - aceita se passou em todas as validações
     RETURN v_length > 0 AND v_length <= 10000;
 END;
