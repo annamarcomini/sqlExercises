@@ -14,14 +14,14 @@ CHECK (
 ALTER TABLE exercicio7.chefs
 ADD CONSTRAINT exercicio7_chefs_ck_name
 CHECK (
-    exercicio7.fn_validate_blank_strings(name)
+    exercicio7.fn_validate_strings(name)
 );
 
 --cks menus table
 ALTER TABLE exercicio7.menus
 ADD CONSTRAINT exercicio7_menus_ck_name
 CHECK (
-    exercicio7.fn_validate_blank_strings(name)
+    exercicio7.fn_validate_strings(name)
 );
 
 --cks kitchens table
@@ -32,13 +32,13 @@ CHECK (max_stations_number > 0);
 ALTER TABLE exercicio7.kitchens
 ADD CONSTRAINT exercicio7_kitchens_ck_name
 CHECK (
-    exercicio7.fn_validate_blank_strings(name)
+    exercicio7.fn_validate_strings(name)
 );
 
 ALTER TABLE exercicio7.kitchens
 ADD CONSTRAINT exercicio7_kitchens_ck_city
 CHECK (
-    exercicio7.fn_validate_blank_strings(city)
+    exercicio7.fn_validate_strings(city)
 );
 
 --cks orders table
