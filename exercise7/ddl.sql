@@ -132,7 +132,14 @@ CREATE TABLE IF NOT EXISTS exercicio7.reservations(
 
   CONSTRAINT exercicio7_chefs_fk
   FOREIGN KEY (exercicio7_t_chefs_c_id)
-  REFERENCES exercicio7.chefs (id)
+  REFERENCES exercicio7.chefs (id),
+  
+  --impossibilita sobreposição
+  CONSTRAINT exercicio7_reservations_station_no_overlap
+  EXCLUDE USING gist (
+      exercicio7_t_station_c_id WITH =,
+      reservation_interval WITH &&
+  )
 );
 
 
