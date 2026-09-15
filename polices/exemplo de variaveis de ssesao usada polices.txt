@@ -1,0 +1,56 @@
+-- esse exemplo é continuação do exemplo 1.
+-- Você precisará executar o exemplo 1 antes de executar esse exemplo 2
+-- não esqueça de assumir o papel da ROLE rl_any_role na hora do SELECT
+
+
+
+-- volta para a ROLE administradora padrão
+RESET ROLE;
+
+
+
+-- concede permissão de SELECT na tabela para o GROUP
+GRANT SELECT
+ON gustavo.t_user
+TO rl_any_role;
+
+
+
+-- cria uma policy de SELECT para a tabela
+CREATE POLICY gustavo_t_user_pol_select
+ON gustavo.t_user
+AS PERMISSIVE
+FOR SELECT
+TO rl_any_role
+USING (
+  current_setting('app.user_id') = '10' AND
+  current_setting('app.user_role') = 'admin'
+);
+
+
+
+-- assume o papel do GROUP
+SET ROLE rl_any_role;
+
+
+
+-- exemplo de SELECT com variáveis de sessão
+BEGIN;
+  -- exemplo funcional
+  SET LOCAL app.user_id = '10';
+  SET LOCAL app.user_role = 'admin';
+  SELECT * FROM gustavo.t_user;
+
+  -- exemplo não funcional
+  SET LOCAL app.user_id = '11';
+  SET LOCAL app.user_role = 'admin';
+  SELECT * FROM gustavo.t_user;
+COMMIT;
+
+
+
+/*
+  Se uma policy de leitura não for satisfeita, resultados são ocultos, mas a policy não dá erro
+
+  Se uma policy de escrita não for satisfeita, a operação dá erro e não é executada
+*/

@@ -1,0 +1,139 @@
+-- cria um schema
+CREATE SCHEMA IF NOT EXISTS gustavo;
+
+
+
+-- cria uma tabela
+CREATE TABLE IF NOT EXISTS gustavo.t_user (
+  id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+  name TEXT NOT NULL
+);
+
+
+
+-- cria um GROUP
+CREATE ROLE rl_any_role WITH
+ NOLOGIN
+ NOSUPERUSER
+ NOCREATEDB
+ NOCREATEROLE
+ NOINHERIT
+ NOREPLICATION
+ NOBYPASSRLS
+ CONNECTION LIMIT 0
+ VALID UNTIL 'infinity';
+
+
+
+-- dá permissão de USAGE no schema para o GROUP
+GRANT USAGE ON SCHEMA gustavo TO rl_any_role;
+
+
+
+-- dá permissão de INSERT na tabela para o GROUP
+GRANT INSERT (
+    name  
+  )
+ON TABLE gustavo.t_user
+TO rl_any_role;
+
+
+
+-- cria uma policy de INSERT para a tabela
+CREATE POLICY gustavo_t_user_pol_insert
+ON gustavo.t_user
+AS PERMISSIVE
+FOR INSERT
+TO rl_any_role
+WITH CHECK (
+  length(name) > 5 AND length(name) < 10
+);
+
+
+
+-- impede que o OWNER da tabela ignore o RLS
+ALTER TABLE gustavo.t_user FORCE ROW LEVEL SECURITY;
+
+
+
+-- habilita o RLS na tabela
+ALTER TABLE gustavo.t_user ENABLE ROW LEVEL SECURITY;
+
+
+
+-- permite que a ROLE administradora padrão possa assumir o papel do GROUP
+GRANT rl_any_role TO neondb_owner;
+
+
+
+-- assume o papel do GROUP
+SET ROLE rl_any_role;
+
+
+
+-- exemplo válido de INSERT
+INSERT INTO gustavo.t_user (name) VALUES ('any value');
+
+
+
+-- exemplo inválido de INSERT
+INSERT INTO gustavo.t_user (name) VALUES ('any');
+
+
+
+/*
+  ON:
+    Nome do schema e tabela
+
+
+
+  AS PERMISSIVE:
+    Se houver mais de uma policy para a mesma tabela, operação e ROLE,
+    a operação será permitida se pelo menos uma das policies permitir a operação
+    (funciona igual um OR lógico)
+
+  AS RESTRICTIVE:
+    Se houver mais de uma policy para a mesma tabela, operação e ROLE,
+    a operação será permitida somente se todas as policies permitirem a operação
+    (funciona igual um AND lógico)
+
+  AS PERMISSIVE é o padrão, caso você não especifique qual quer usar
+
+  AS RESTRICTIVE só funciona se você tiver pelo menos uma policy para a mesma tabela, operação e ROLE
+  com AS PERMISSIVE configurado
+
+  
+
+  FOR:
+    Tipo de operação que a policy se aplica (ALL, SELECT, INSERT, UPDATE e DELETE)
+    ALL é o valor padrão
+    Você só pode especificar um tipo dessas operações por policy
+
+
+
+  TO:
+    Role(s) que a policy se aplica. Você pode especificar mais de uma role,
+    separando por vírgula (ex: TO rl_any_role, rl_other_role)
+    Se você não especificar nenhuma role, a policy se aplica a todas as roles existentes (TO PUBLIC)
+
+
+
+
+  WITH CHECK:
+    Usado em policies de INSERT e UPDATE para definir uma condição que deve ser satisfeita
+    para que a operação seja permitida
+    Define o que pode ser inserido ou atualizado
+
+  USING:
+    Usado em policies de SELECT, UPDATE e DELETE para definir uma condição que deve ser satisfeita
+    para que a operação seja permitida
+    Define o que pode ser lido, atualizado ou deletado
+
+  Em INSERT, você só pode usar WITH CHECK
+
+  Em SELECT, você só pode usar USING
+
+  Em UPDATE, você pode usar tanto WITH CHECK quanto USING
+
+  Em DELETE, você só pode usar USING
+*/
