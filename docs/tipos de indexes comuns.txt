@@ -1,0 +1,22 @@
+Indexes
+Nesta seção, constam os padrões de nomenclatura para indexes.
+
+Non-Unique
+Simples: <schema>_t_<table>_idx_<col>
+
+Composto: <schema>_t_<table>_idx_<col1>_c_<col2>
+
+Unique Index
+Simples: <schema>_t_<table>_idxuq_<col>
+
+Composto: <schema>_t_<table>_idxuq_<col1>_c_<col2>
+
+Partial Index (Non-Unique)
+Simples: <schema>_t_<table>_idxpt_<col>
+
+Composto: <schema>_t_<table>_idxpt_<col1>_c_<col2>
+
+Partial Index (Unique)
+Simples: <schema>_t_<table>_idxuqpt_<col>
+
+Composto: <schema>_t_<table>_idxuqpt_<col1>_c_<col2>

@@ -1,0 +1,55 @@
+No PostgreSQL, quando você define uma chave estrangeira (FOREIGN KEY), você pode escolher o comportamento de integridade referencial usando ações como ON DELETE e ON UPDATE.
+Os 5 principais tipos são estes 👇
+🔑 1. RESTRICT
+Impede a operação se houver registros relacionados
+👉 Exemplo:
+DELETE FROM cliente WHERE id = 1;
+❌ Vai falhar se existir pedido ligado a esse cliente.
+📌 Diferença importante:
+Verificação é imediata (não pode nem tentar)
+🔑 2. NO ACTION (padrão)
+Também impede a operação, mas só no final da transação
+👉 Parece igual ao RESTRICT, mas:
+permite operações intermediárias dentro da transação
+📌 Na prática:
+maioria dos casos → funciona igual ao RESTRICT
+🔑 3. CASCADE
+Propaga a ação automaticamente
+👉 Exemplo:
+ON DELETE CASCADE
+✔ Se apagar o pai → apaga os filhos
+📌 Muito usado em:
+tabelas dependentes (ex: itens de pedido)
+🔑 4. SET NULL
+Define a chave estrangeira como NULL
+👉 Exemplo:
+ON DELETE SET NULL
+✔ O registro filho continua existindo
+✔ Apenas perde a referência
+⚠️ A coluna precisa permitir NULL
+🔑 5. SET DEFAULT
+Define a chave estrangeira com valor padrão
+👉 Exemplo:
+ON DELETE SET DEFAULT
+✔ Usa o valor definido em DEFAULT
+⚠️ Esse valor precisa existir na tabela pai (ou você terá erro)
+🧠 Resumo rápido
+Tipo	Comportamento ao deletar o pai
+RESTRICT	Bloqueia na hora
+NO ACTION	Bloqueia no final
+CASCADE	Deleta tudo junto
+SET NULL	Remove a referência
+SET DEFAULT	Usa valor padrão
+💡 Exemplo completo
+ALTER TABLE pedido
+ADD CONSTRAINT fk_cliente
+FOREIGN KEY (cliente_id)
+REFERENCES cliente(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+⚠️ Dica prática (importante)
+Use CASCADE com cuidado → pode apagar muita coisa sem perceber
+Use SET NULL quando o relacionamento é opcional
+Use RESTRICT/NO ACTION quando quer segurança
+Se quiser, posso te mostrar casos reais de modelagem (tipo quando usar cada um em sistemas de produção) 
+— isso ajuda muito a evitar bugs 👍

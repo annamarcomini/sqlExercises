@@ -1,0 +1,94 @@
+A extensão pgTAP é usada para testes automatizados em bancos PostgreSQL, inspirada no framework TAP. Ela fornece várias funções para verificar comportamentos de queries, funções e regras do banco.
+Entre as funções mais usadas estão ok(), is(), throws_ok() e lives_ok(). Elas servem para validar condições diferentes durante os testes.
+1️⃣ ok() – testa se uma expressão é verdadeira
+ok() é o teste mais simples. Ele verifica se uma expressão booleana retorna TRUE.
+Sintaxe
+SELECT ok(condição, descrição);
+Exemplo
+SELECT ok(1 = 1, '1 deve ser igual a 1');
+✔ Passa se a expressão for TRUE
+
+❌ Falha se for FALSE ou NULL
+Exemplo prático
+SELECT ok(
+    EXISTS(SELECT 1 FROM usuarios WHERE id = 10),
+    'Usuário 10 deve existir'
+);
+2️⃣ is() – compara dois valores
+is() verifica se dois valores são iguais.
+Sintaxe
+SELECT is(valor_obtido, valor_esperado, descrição);
+Exemplo
+SELECT is(2 + 2, 4, '2 + 2 deve ser 4');
+Se o valor retornado for diferente do esperado, o teste falha.
+Exemplo com função
+SELECT is(
+    calcular_total(10, 5),
+    15,
+    'Total deve ser 15'
+);
+💡 Diferença para ok()
+ok() → espera TRUE/FALSE
+is() → compara valores
+3️⃣ throws_ok() – testa se ocorre erro
+throws_ok() verifica se uma expressão lança um erro esperado.
+Muito usado para testar validações, constraints e exceções.
+Sintaxe
+SELECT throws_ok(sql, erro, descrição);
+Exemplo
+SELECT throws_ok(
+    $$SELECT 1/0$$,
+    'division_by_zero',
+    'Deve lançar erro de divisão por zero'
+);
+Testando constraint
+SELECT throws_ok(
+$$
+INSERT INTO usuarios(id) VALUES (NULL)
+$$,
+'not_null_violation',
+'ID não pode ser NULL'
+);
+✔ Passa se o erro ocorrer
+
+❌ Falha se não houver erro ou se for erro diferente
+4️⃣ lives_ok() – testa se não ocorre erro
+lives_ok() é o oposto de throws_ok().
+Ele verifica se um comando executa sem erro.
+Sintaxe
+SELECT lives_ok(sql, descrição);
+Exemplo
+SELECT lives_ok(
+$$SELECT 1 + 1$$,
+'Operação simples não deve falhar'
+);
+Exemplo com função
+SELECT lives_ok(
+$$SELECT atualizar_saldo(1, 100)$$,
+'Atualização de saldo deve funcionar'
+);
+✔ Passa se não ocorrer erro
+
+❌ Falha se qualquer erro ocorrer
+📊 Resumo
+Função	O que testa	Exemplo
+ok()	expressão booleana	ok(idade > 18)
+is()	igualdade de valores	is(resultado, 10)
+throws_ok()	se ocorre erro esperado	throws_ok('SQL', 'unique_violation')
+lives_ok()	se não ocorre erro	lives_ok('SQL')
+✅ Uso típico em testes pgTAP
+SELECT plan(4);
+SELECT ok(1 = 1, 'verdadeiro');
+SELECT is(2+2, 4, 'soma');
+SELECT throws_ok($$SELECT 1/0$$, 'division_by_zero', 'erro esperado');
+SELECT lives_ok($$SELECT 5/1$$, 'sem erro');
+SELECT * FROM finish();
+💡 Se quiser, posso também te mostrar:
+10 funções mais importantes do pgTAP
+Como testar funções PL/pgSQL
+Como integrar pgTAP com CI (GitHub Actions, GitLab CI, etc.).
+ 
+.
+ 
+.
+ 

@@ -1,0 +1,116 @@
+Exercício — Sistema Acadêmico (baseado em telas do sistema)
+Você está participando do desenvolvimento de um sistema para gerenciar uma universidade. Durante a reunião de levantamento de requisitos, 
+o cliente descreveu várias telas administrativas e operacionais do sistema.
+A partir dessas descrições, você deve projetar o modelo de dados necessário para suportar o funcionamento do sistema.
+Tela de cadastro de departamentos
+O sistema possui uma tela onde a administração da universidade pode registrar departamentos acadêmicos.
+Cada departamento possui algumas informações básicas, como nome e uma sigla. Esses departamentos são responsáveis por organizar 
+parte da estrutura acadêmica da universidade.
+Nessa mesma tela é possível visualizar todos os professores vinculados ao departamento e também as disciplinas que pertencem a ele.
+Tela de cadastro de professores
+Existe uma tela para cadastrar professores da universidade.
+Cada professor possui informações pessoais e também precisa ser associado a um departamento responsável.
+No cadastro também é possível ver:
+quais disciplinas esse professor pode lecionar
+quais turmas ele está ministrando no semestre atual
+Nem todo professor necessariamente estará ministrando uma turma naquele momento.
+Tela de cadastro de cursos
+A universidade oferece vários cursos de graduação.
+Existe uma tela administrativa onde os responsáveis podem criar e editar cursos.
+Ao cadastrar um curso, algumas informações são registradas, como nome e departamento responsável.
+Dentro da tela de um curso existe uma área onde o administrador pode definir quais disciplinas fazem parte da grade curricular daquele curso.
+Uma mesma disciplina pode aparecer em mais de um curso.
+Tela de cadastro de disciplinas
+Há uma tela dedicada ao cadastro de disciplinas oferecidas pela universidade.
+Cada disciplina possui informações como:
+código
+nome
+carga horária
+Durante o cadastro também é possível:
+indicar qual departamento é responsável pela disciplina
+definir quais outras disciplinas precisam ser cursadas antes dela
+Esses pré-requisitos podem variar de disciplina para disciplina.
+Tela de cadastro de alunos
+Existe uma tela para registrar alunos da universidade.
+No momento do cadastro, o aluno precisa ser associado a um curso específico.
+Também são registrados dados acadêmicos como número de matrícula e data de ingresso.
+Dentro do perfil de um aluno é possível visualizar:
+disciplinas já cursadas
+disciplinas em andamento
+histórico de notas
+Tela de configuração de semestres
+O sistema possui uma área administrativa para registrar períodos letivos.
+Cada período representa um semestre acadêmico e possui informações como:
+ano
+número do semestre
+data de início
+data de término
+Esses períodos são usados posteriormente quando a universidade oferta disciplinas.
+Tela de oferta de disciplinas
+Antes de cada semestre começar, a universidade abre turmas das disciplinas.
+Existe uma tela onde os administradores podem ofertar uma disciplina em um determinado semestre.
+Durante essa configuração são definidos:
+qual disciplina será ofertada
+qual professor irá ministrar a turma
+limite máximo de alunos
+sala onde a turma ocorrerá
+Uma mesma disciplina pode ter várias turmas no mesmo semestre.
+Tela de cadastro de salas
+O sistema também possui uma área onde são cadastradas as salas físicas da universidade.
+Cada sala possui algumas informações como:
+prédio
+número da sala
+capacidade máxima de alunos
+Essas salas são utilizadas quando turmas são ofertadas.
+Tela de configuração de horários de aula
+Ao configurar uma turma, também é necessário definir os horários em que ela ocorrerá durante a semana.
+O sistema permite registrar múltiplos horários para a mesma turma.
+Por exemplo, uma turma pode ocorrer:
+segunda-feira de manhã
+quarta-feira de manhã
+Cada um desses horários é registrado separadamente no sistema.
+Tela de matrícula em disciplinas
+Durante o período de matrícula, os alunos podem se inscrever nas turmas disponíveis.
+Existe uma tela onde o aluno escolhe em quais turmas deseja se matricular.
+O sistema registra essas matrículas e impede que o aluno se matricule duas vezes na mesma turma.
+A partir dessa tela também é possível consultar as turmas em que o aluno já está matriculado.
+Tela de lançamento de notas
+Depois que o semestre começa, os professores possuem acesso a uma tela onde podem registrar as notas dos alunos em suas turmas.
+Nessa tela o professor seleciona uma turma e visualiza todos os alunos matriculados nela.
+Para cada aluno, o professor pode registrar diferentes avaliações, como provas e trabalhos, 
+e também definir uma situação final ao término da disciplina.
+Tela de histórico escolar
+Existe uma tela onde é possível consultar o histórico acadêmico de um aluno.
+Nessa tela aparecem:
+todas as disciplinas já cursadas
+as turmas em que o aluno participou
+as notas obtidas
+a situação final em cada disciplina
+Tela de gerenciamento de disciplinas optativas
+Além das disciplinas obrigatórias da grade, o sistema permite que a universidade ofereça disciplinas optativas.
+Na tela de cadastro de disciplinas optativas, o administrador consegue:
+criar novas disciplinas optativas que fazem parte do catálogo da universidade
+associar a disciplina optativa a um ou mais cursos, permitindo que os alunos desses cursos possam se matricular
+definir carga horária, departamento responsável e período de oferta
+Nessa mesma tela, o sistema exibe quais alunos se matricularam em cada optativa e permite limitar o número máximo de vagas.
+Tela de cadastro de oficinas
+O sistema também possui uma funcionalidade para professores criarem oficinas, que são disciplinas eventuais fora da grade curricular.
+Na tela de oficinas, o professor pode:
+criar uma oficina com título e descrição, sem que ela exista previamente na grade da universidade
+definir datas e horários específicos para a oficina
+indicar sala e limite de alunos
+abrir inscrições para os alunos interessados
+As oficinas não precisam de pré-requisitos, mas podem ser associadas a um departamento ou área do conhecimento para organização.
+Tela de inscrição em optativas e oficinas
+No período de matrícula, além das disciplinas obrigatórias, os alunos têm acesso a uma tela específica para:
+visualizar todas as disciplinas optativas disponíveis para seu curso
+visualizar todas as oficinas abertas por professores naquele semestre
+se inscrever nas optativas ou oficinas, respeitando limite de vagas
+O sistema deve impedir que um aluno se inscreva duas vezes na mesma optativa ou oficina e também pode exibir 
+conflitos de horário caso a oficina coincida com outra turma do aluno.
+Tela de histórico de optativas e oficinas
+O histórico do aluno também inclui informações sobre:
+disciplinas optativas cursadas
+oficinas que ele participou
+notas e situação final, se houver avaliação
+Isso permite que o aluno e a administração tenham registro completo de todas as atividades acadêmicas, não apenas as disciplinas obrigatórias.

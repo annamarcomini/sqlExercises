@@ -1,0 +1,333 @@
+📦 Exercício: Sistema de Gestão de Cozinhas Compartilhadas 
+
+🧠 Contexto 
+
+Uma startup está desenvolvendo uma plataforma para gerenciamento de cozinhas compartilhadas (cloud kitchens), onde cozinheiros independentes alugam estações de trabalho para produzir refeições destinadas a delivery. 
+
+Esses cozinheiros utilizam a plataforma para: 
+
+Reservar estações em cozinhas físicas 
+
+Gerenciar seus próprios cardápios 
+
+Receber pedidos de clientes 
+
+A empresa precisa de um banco de dados robusto que garanta integridade, segurança e consistência operacional, já que conflitos de agenda, uso indevido de estações e inconsistências de pedidos geram prejuízos financeiros. 
+
+ 
+
+ 
+
+📏 Regras de Negócio 
+
+👤 Cozinheiros 
+
+Cada cozinheiro possui: 
+
+Nome completo 
+
+Email único 
+
+CPF único 
+
+Data de cadastro 
+
+Situação (ativo, suspenso ou inativo) 
+
+Um cozinheiro suspenso: 
+
+Não pode realizar reservas 
+
+Não pode receber pedidos 
+
+ 
+
+ 
+
+🏢 Cozinhas 
+
+Cada cozinha possui: 
+
+Nome 
+
+Endereço completo 
+
+Cidade 
+
+Capacidade máxima de estações 
+
+O número de estações cadastradas em uma cozinha não pode exceder sua capacidade 
+
+ 
+
+ 
+
+🍳 Estações 
+
+Cada estação pertence a uma única cozinha 
+
+Possui um identificador único dentro da cozinha 
+
+Possui um tipo operacional (ex: grelha, fritura, preparo, forno) 
+
+Possui uma situação operacional (disponível, manutenção, inativa) 
+
+Estações indisponíveis (manutenção ou inativas): 
+
+Não podem ser reservadas 
+
+ 
+
+ 
+
+📅 Reservas 
+
+Uma reserva vincula: 
+
+Um cozinheiro 
+
+Uma estação 
+
+Um intervalo de tempo (início e fim) 
+
+Regras: 
+
+O horário de término deve ser maior que o de início 
+
+Deve existir uma duração mínima e máxima permitida 
+
+Não pode haver sobreposição de reservas para a mesma estação 
+
+Um cozinheiro não pode ter reservas simultâneas 
+
+ 
+
+ 
+
+📋 Cardápios 
+
+Um cozinheiro pode possuir vários cardápios 
+
+Cada cardápio possui: 
+
+Nome 
+
+Data de criação 
+
+Situação (rascunho, publicado, arquivado) 
+
+Apenas cardápios publicados podem ser utilizados para pedidos 
+
+ 
+
+ 
+
+🧾 Pedidos 
+
+Cada pedido está associado a um cardápio 
+
+Um pedido possui: 
+
+Valor total 
+
+Situação (pendente, confirmado, cancelado, concluído) 
+
+Data/hora de criação 
+
+Regras: 
+
+O valor total deve ser positivo 
+
+Um pedido só pode ser criado se: 
+
+O cardápio estiver publicado 
+
+O cozinheiro responsável estiver ativo 
+
+ 
+
+ 
+
+🔗 Relacionamentos esperados 
+
+A modelagem deve refletir adequadamente os vínculos entre: 
+
+Cozinheiros e cardápios 
+
+Cozinheiros e reservas 
+
+Cozinhas e estações 
+
+Estações e reservas 
+
+Cardápios e pedidos 
+
+Além disso, o uso de estações por cozinheiros deve ser corretamente representado considerando a natureza temporal (reservas). 
+
+ 
+
+ 
+
+🧩 Atividades 
+
+1. Modelagem 
+
+Construa o modelo entidade-relacionamento (MER) com base nas regras fornecidas. 
+
+Sua modelagem deve: 
+
+Identificar corretamente entidades e atributos 
+
+Definir chaves primárias 
+
+Representar relacionamentos e cardinalidades 
+
+Tratar adequadamente restrições implícitas nas regras de negócio 
+
+ 
+
+ 
+
+2. Implementação Física 
+
+Implemente o banco de dados em PostgreSQL. 
+
+Seu script deve contemplar: 
+
+Organização lógica adequada do banco (ex: schemas, se aplicável) 
+
+Definição de tabelas com tipos apropriados 
+
+Nomeação consistente de objetos (tabelas, colunas, constraints) 
+
+Definição de: 
+
+Chaves primárias 
+
+Chaves estrangeiras 
+
+Restrições de unicidade 
+
+Restrições de integridade 
+
+ 
+
+ 
+
+3. Regras e Validações 
+
+Implemente mecanismos que garantam o cumprimento das regras de negócio diretamente no banco. 
+
+Inclua: 
+
+Restrições de domínio (ex: valores permitidos) 
+
+Validações envolvendo datas, valores e estados 
+
+Regras que impeçam inconsistências (ex: sobreposição de reservas) 
+
+Quando necessário: 
+
+Utilize funções auxiliares 
+
+Avalie o uso de constraints, triggers ou outras estratégias 
+
+ 
+
+ 
+
+4. Valores padrão e automação 
+
+Defina comportamentos automáticos para colunas quando apropriado, como: 
+
+Geração de identificadores 
+
+Preenchimento automático de datas 
+
+Estados iniciais coerentes 
+
+ 
+
+ 
+
+5. Controle de acesso 
+
+Modele um conjunto de perfis de acesso ao banco que represente diferentes tipos de usuários do sistema. 
+
+Seu modelo deve: 
+
+Separar claramente níveis de acesso 
+
+Restringir operações inadequadas (ex: usuários comuns não devem alterar estruturas críticas) 
+
+Permitir apenas as operações necessárias para cada perfil 
+
+Implemente: 
+
+Criação de roles 
+
+Concessão e revogação de permissões 
+
+ 
+
+ 
+
+6. Testes automatizados 
+
+Crie uma suíte de testes utilizando pgTAP para validar o comportamento do banco. 
+
+Os testes devem cobrir: 
+
+✔ Regras de negócio 
+
+Validações de dados 
+
+Regras de integridade 
+
+Restrições de domínio 
+
+✔ Inserções 
+
+Casos válidos que devem funcionar 
+
+Casos inválidos que devem falhar 
+
+✔ Funções (se houver) 
+
+Validação de comportamento esperado 
+
+Testes com entradas válidas e inválidas 
+
+✔ Integridade referencial 
+
+Verificação de relacionamentos entre entidades 
+
+ 
+
+ 
+
+📦 Entregáveis 
+
+Você deve entregar: 
+
+Modelo entidade-relacionamento (MER) 
+
+Script SQL completo de criação do banco 
+
+Script de controle de acesso (roles e permissões) 
+
+Script de testes com pgTAP 
+
+ 
+
+ 
+
+⚠️ Observações 
+
+Nem todas as regras podem ser resolvidas apenas com constraints simples — avalie cuidadosamente a melhor abordagem 
+
+Decisões de modelagem devem ser justificáveis com base nas regras fornecidas 
+
+  
+
+ 

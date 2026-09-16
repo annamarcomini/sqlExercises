@@ -1,0 +1,7 @@
+Exercício 5 de SQL
+ 
+Adicionar uma coluna na tabela de produtos que contenha um código de 8 caracteres composto por letras minúsculas, 
+letras maiúsculas ou números. Esse código deve ser único por produto. 
+Ele deve ser gerado automaticamente a cada inserção de novo produto. 
+Para isso, use uma função que gere o código e a inclua como valor DEFAULT desta coluna;
+Escreva COMMENT ONs para documentar tudo que você desenvolveu (schema, tabelas e funções).

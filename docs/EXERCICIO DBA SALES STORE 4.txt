@@ -1,0 +1,45 @@
+🏬 Exercício de SQL: Sistema de Loja Virtual com Vendedores
+Você foi contratado como DBA de uma loja virtual que vende produtos de diferentes categorias. Seu desafio é 
+modelar o banco de dados de forma robusta, garantindo integridade de dados, evitando erros e fraudes. 
+Para isso, você deverá criar tabelas, relações, constraints e funções que validem dados críticos.
+1️⃣ Clientes
+Cada cliente possui informações pessoais e deve ser registrado de forma confiável:
+ID: identificador único do cliente.
+Nome: não pode estar em branco, deve ter entre 2 e 150 caracteres, apenas letras e espaços.
+Email: deve estar no formato válido de email (ex: usuario@dominio.com).
+Data de nascimento: não pode ser uma data futura.
+CPF: identificador único de 11 dígitos, deve ser validado por função que implementa o algoritmo oficial do CPF.
+Status: indica se o cliente está ativo ou inativo.
+⚠️ Todas as regras acima devem ser implementadas com CHECK constraints. O CPF deve ser valido com uma função 
+PL/pgSQL com CHECK
+2️⃣ Vendedores
+A loja agora possui vendedores que cadastram produtos próprios:
+ID: identificador único do vendedor.
+Nome/Razão social: não vazio.
+CNPJ: identificador único de 14 dígitos, válido segundo o algoritmo oficial do CNPJ.
+Email: deve ser válido.
+Telefone: opcional.
+Status: ativo ou inativo.
+Regras:
+Cada produto deve pertencer a um vendedor.
+O CNPJ e o telefone devem ser validados por funções PL/pgSQL com CHECK.
+3️⃣ Produtos
+Cada produto deve ter:
+ID: identificador único.
+Nome: não vazio.
+Preço: número positivo (> 0).
+Estoque: número inteiro, nunca negativo.
+Categoria: limitado a valores fixos (eletronico, alimento, vestuario, outros). Recomenda-se usar ENUM.
+Vendedor: referência ao vendedor dono do produto.
+⚠️ Cada regra deve ser implementada via CHECK constraints ou tipos específicos.
+4️⃣ Vendas
+Cada venda representa a compra de produtos por clientes:
+ID: identificador único da venda.
+Cliente: referência a um cliente existente.
+Produto: referência a um produto existente.
+Quantidade: número positivo, não maior que o estoque disponível.
+Data da venda: não pode ser futura.
+Desconto: opcional, valor entre 0% e 100%.
+ 
+.
+ 

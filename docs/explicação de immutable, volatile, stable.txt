@@ -1,0 +1,5 @@
+VOLATILE: use sempre que for realizar alterações no banco (INSERT, UPDATE ou DELETE) ou que for utilizar funções como random();
+
+STABLE: use sempre que for realizar "somente" SELECT na tabela ou funções tipo coisas relacionadas a data;
+
+IMMUTABLE: use quando não fizer nenhuma operação no banco de dados, tipo quando for apenas realizar operações matemáticas.

@@ -1,0 +1,10 @@
+Exercício 6
+ 
+Crie testes unitários utilizando a extensão PGTAP do PostgreSQL para suas funções de validação de CPF, CNPJ e telefone.
+ 
+CHECK LIST:
+Instale a extensão PGTAP no SGBD;
+
+Crie um diretório chamado "tests" na raiz do seu projeto. Escreva um arquivo separado para cada teste necessário e adicione nessa pasta;
+
+Rode o pipeline disponível no GitHub e verifique se seus testes estão funcionando adequadamente.

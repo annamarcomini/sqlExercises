@@ -1,0 +1,54 @@
+🔐 ROLES
+1️⃣ app_anonymous
+👉 Usuário não autenticado (login/registro)
+📌 clients
+INSERT:
+name
+email
+birth_date
+cpf
+password_hash
+SELECT:
+id
+email
+password_hash
+👉 Usado para:
+cadastro
+verificar existência de e-mail no login e logar
+
+2️⃣ app_customer
+👉 Cliente autenticado
+📌 clients
+SELECT:
+id, name, email, birth_date, cpf, active
+UPDATE:
+name, email, password_hash
+📌 products
+SELECT:
+id, name, price_cents, stock, category, code
+📌 sales
+INSERT:
+quantities_sold, sale_date, discount_percent, product_id
+SELECT:
+id, quantities_sold, sale_date, discount_percent, product_id
+
+3️⃣ app_admin
+👉 Usuário interno (gestão)
+📌 clients
+SELECT: todas colunas
+UPDATE:
+active
+📌 products
+SELECT: todas
+INSERT:
+name, price_cents, stock, category
+UPDATE:
+name, price_cents, stock, category
+📌 sellers
+SELECT: todas
+INSERT:
+name, cnpj, email, telephone, product_id
+UPDATE:
+name, email, telephone, status
+📌 sales
+SELECT: todas

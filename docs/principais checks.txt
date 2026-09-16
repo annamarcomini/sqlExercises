@@ -1,0 +1,24 @@
+Primary key: restrição nomeável que define uma chave primária;
+
+Foreign key: restrição nomeável que define uma chave estrangeira;
+
+Unique: restrição nomeável que garante unicidade de valores;
+
+Exclude: restrição nomeável que garante unicidade de valores em intervalos definidos;
+
+Check: restrição nomeável que garante que o valor de uma coluna esteja de acordo com uma expressão booleana;
+
+Default: restrição "não nomeável" que garante que um valor tenha um valor padrão;
+
+Not null / Null: restrições "não nomeáveis" que definem a nulidade de uma coluna.
+
+abreviações para nomenclatura:
+Primary key (pk)
+ 
+Unique key (uq) - algumas pessoas usam "uk" também, mas é menos comum
+ 
+Foreign key (fk)
+ 
+Exclude (ex)
+ 
+Check (ck)

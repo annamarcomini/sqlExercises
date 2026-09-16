@@ -1,0 +1,28 @@
+🏋️ Exercício de SQL: Gerenciamento de Vendas
+Você foi contratado como DBA de uma loja virtual que vende eletrônicos, alimentos e roupas. 
+Seu desafio é modelar o banco de dados de forma robusta, aplicando regras de integridade rigorosas para evitar erros e fraudes.
+Cenário
+Clientes
+A loja precisa armazenar os clientes com informações precisas e confiáveis. Cada cliente tem:
+Um ID único que identifica ele na loja.
+Um nome válido (não pode estar em branco).
+Um email com formato correto, que será usado para login e notificações.
+Uma data de nascimento que não pode ser futura.
+Um CPF ou identificador único de 11 dígitos.
+Um campo que indica se o cliente está ativo ou inativo.
+⚠️ Pense em CHECK constraints para cada regra acima.
+Produtos
+A loja vende diferentes produtos, e cada produto deve ter:
+Um ID único para identificação.
+Um nome não vazio.
+Um preço positivo (não pode ser zero ou negativo).
+Um estoque que nunca pode ser negativo.
+Uma categoria limitada a um conjunto específico, por exemplo: eletronico, alimento, vestuario, outros.
+⚠️ Novamente, cada regra pode ser implementada com CHECK constraints.
+Vendas
+Cada venda registra a transação de um cliente comprando produtos. Para cada venda:
+Deve ser referenciada a um cliente existente.
+Deve ser referenciada a um produto existente.
+A quantidade comprada precisa ser positiva e não maior que o estoque disponível.
+A data da venda não pode estar no futuro.
+Um desconto opcional pode ser aplicado, mas deve estar entre 0% e 100%.
